@@ -35,3 +35,10 @@ class UserForProviders(BaseModel):
     mobile: str
     name: str
     surname: str
+
+
+class User(BaseModel):
+    username: str
+    email: str
+    mobile: str
+    role: str
