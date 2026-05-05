@@ -2,11 +2,11 @@ from pydantic import BaseModel
 from sqlmodel import SQLModel, Field
 
 
-class PatientInDB(SQLModel, table=True):
-    __tablename__ = "patients"
+class UserInDB(SQLModel, table=True):
+    __tablename__ = "users"
 
-    mbo: str = Field(primary_key=True)
-    username: str
+    mbo: str | None
+    username: str = Field(primary_key=True)
     password: str
     email: str
     mobile: str
@@ -14,10 +14,11 @@ class PatientInDB(SQLModel, table=True):
     surname: str
     receive_by_sms: bool = False
     receive_by_email: bool = False
+    role: str
 
 
-class PatientPersonal(BaseModel):
-    mbo: str
+class UserPersonal(BaseModel):
+    mbo: str | None
     username: str
     email: str
     mobile: str
@@ -25,9 +26,10 @@ class PatientPersonal(BaseModel):
     surname: str
     receive_by_sms: bool
     receive_by_email: bool
+    role: str
 
 
-class PatientForProviders(BaseModel):
+class UserForProviders(BaseModel):
     mbo: str
     email: str
     mobile: str
