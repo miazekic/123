@@ -46,4 +46,9 @@ def get_current_user(
         email=user_db.email,
         mobile=user_db.mobile,
         role=user_db.role,
+        mbo=user_db.mbo,
+        name=user_db.name,
+        surname=user_db.surname,
+        receive_by_sms=user_db.receive_by_sms,
+        receive_by_email=user_db.receive_by_email,
     )
