@@ -2,7 +2,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi import Depends, HTTPException
 from jose import jwt
 from passlib.context import CryptContext
-from app.src.models.user import User
+from app.src.models.user import UserInternal
 from app.src.repositories.users import UserRepository, get_user_repo
 import os
 
@@ -29,7 +29,7 @@ def authenticate_user(
 
 def get_current_user(
     token: str = Depends(oauth2_scheme), repo: UserRepository = Depends(get_user_repo)
-) -> User:
+) -> UserInternal:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms="HS256")
         username: str = payload.get("username")
@@ -41,7 +41,8 @@ def get_current_user(
     user_db = repo.get_by_username(username)
     if not user_db:
         raise HTTPException(status_code=401, detail="Could not validate token")
-    return User(
+    return UserInternal(
+        userid=user_db.userid,
         username=user_db.username,
         email=user_db.email,
         mobile=user_db.mobile,

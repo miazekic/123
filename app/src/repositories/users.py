@@ -17,8 +17,12 @@ class UserRepository:
         statement = select(UserInDB).where(UserInDB.username == username)
         return self.db_session.exec(statement).first()
 
-    def set_sms_notifications(self, username: str, enabled: bool) -> None:
-        statement = select(UserInDB).where(UserInDB.username == username)
+    def get_by_userid(self, userid: int) -> UserInDB:
+        statement = select(UserInDB).where(UserInDB.userid == userid)
+        return self.db_session.exec(statement).first()
+
+    def set_sms_notifications(self, userid: int, enabled: bool) -> None:
+        statement = select(UserInDB).where(UserInDB.userid == userid)
         user = self.db_session.exec(statement).first()
         if not user:
             raise HTTPException(status_code=400, detail="User not found")
@@ -26,8 +30,8 @@ class UserRepository:
         self.db_session.add(user)
         self.db_session.commit()
 
-    def set_email_notifications(self, username: str, enabled: bool) -> None:
-        statement = select(UserInDB).where(UserInDB.username == username)
+    def set_email_notifications(self, userid: int, enabled: bool) -> None:
+        statement = select(UserInDB).where(UserInDB.userid == userid)
         user = self.db_session.exec(statement).first()
         if not user:
             raise HTTPException(status_code=400, detail="User not found")
@@ -35,8 +39,8 @@ class UserRepository:
         self.db_session.add(user)
         self.db_session.commit()
 
-    def update(self, username: str, params_to_update: dict[str, any]) -> None:
-        statement = select(UserInDB).where(UserInDB.username == username)
+    def update(self, userid: int, params_to_update: dict[str, any]) -> None:
+        statement = select(UserInDB).where(UserInDB.userid == userid)
         user = self.db_session.exec(statement).first()
         if not user:
             raise HTTPException(status_code=400, detail="User not found")

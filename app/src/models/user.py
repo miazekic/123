@@ -18,7 +18,20 @@ class UserInDB(SQLModel, table=True):
     role: str
 
 
-class User(BaseModel):
+class UserInternal(BaseModel):
+    userid: int
+    mbo: str
+    username: str
+    email: str
+    mobile: str
+    name: str
+    surname: str
+    receive_by_sms: bool = False
+    receive_by_email: bool = False
+    role: str
+
+
+class UserPersonal(BaseModel):
     mbo: str | None
     username: str
     email: str
@@ -30,7 +43,7 @@ class User(BaseModel):
     role: str
 
 
-class UserNoMBO(BaseModel):
+class UserPersonalNoMBO(BaseModel):
     username: str
     email: str
     mobile: str
