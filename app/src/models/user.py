@@ -5,8 +5,9 @@ from sqlmodel import SQLModel, Field
 class UserInDB(SQLModel, table=True):
     __tablename__ = "users"
 
+    userid: int = Field(primary_key=True)
     mbo: str | None
-    username: str = Field(primary_key=True)
+    username: str
     password: str
     email: str
     mobile: str
