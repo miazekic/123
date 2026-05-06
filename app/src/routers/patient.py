@@ -23,9 +23,9 @@ def patient_treatments(
     treatments = repo.get_by_userid(user.userid)
     return [
         PerscriptionPublic(
-            drugname=p.drugname,
+            drugName=p.drugname,
             times=p.times,
-            pickup_day=p.pickup_day,
+            pickupDay=p.pickup_day,
         )
         for p in treatments
     ]

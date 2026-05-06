@@ -22,6 +22,6 @@ class Perscription(BaseModel):
 
 
 class PerscriptionPublic(BaseModel):
-    drugname: str
+    drugName: str
     times: list[str]
-    pickup_day: date
+    pickupDay: date

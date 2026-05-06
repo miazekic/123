@@ -53,9 +53,9 @@ def patient_perscriptions(
     persctiptions_db = perscription_repo.get_by_userid(patient_db.userid)
     return [
         PerscriptionPublic(
-            drugname=p.drugname,
+            drugName=p.drugname,
             times=p.times,
-            pickup_day=p.pickup_day,
+            pickupDay=p.pickup_day,
         )
         for p in persctiptions_db
     ]
