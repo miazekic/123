@@ -308,7 +308,7 @@ async function searchPatient() {
 }
 
 // ── Prescribe (provider) ───────────────────────────────────────────
-// PerscriptionBody: patientMbo, drugName, times, pickupDay (date string YYYY-MM-DD)
+// PrescriptionBody: patientMbo, drugName, times, pickupDay (date string YYYY-MM-DD)
 document.getElementById('btn-add-time').addEventListener('click', () => addTimeEntry());
 
 function addTimeEntry(value = '') {
@@ -349,7 +349,7 @@ async function submitRx() {
   }
 
   try {
-    await apiFetch('/api/provider/perscription', {
+    await apiFetch('/api/provider/prescription', {
       method: 'POST',
       body: { patientMbo, drugName, times, pickupDay }
     });

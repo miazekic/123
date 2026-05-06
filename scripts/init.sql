@@ -45,11 +45,11 @@ INSERT INTO users VALUES (
     "provider"
 );
 
-CREATE TABLE perscriptions (
-    perscriptionid INTEGER NOT NULL AUTO_INCREMENT,
+CREATE TABLE prescriptions (
+    prescriptionid INTEGER NOT NULL AUTO_INCREMENT,
     userid INTEGER NOT NULL,
     drugname VARCHAR(200) NOT NULL,
     times JSON,
     pickup_day DATE,
-    PRIMARY KEY (perscriptionid)
+    PRIMARY KEY (prescriptionid)
 );

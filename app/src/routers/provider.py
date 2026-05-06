@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.src.models.user import UserForProviders
 from app.src.repositories.users import UserRepository, get_user_repo
-from app.src.repositories.perscriptions import (
-    PerscriptionRepository,
-    get_perscription_repo,
+from app.src.repositories.prescriptions import (
+    PrescriptionRepository,
+    get_prescription_repo,
 )
 from app.src.services.auth import get_current_user
 from app.src.models.user import UserInternal
-from app.src.models.perscription import Perscription, PerscriptionPublic
+from app.src.models.prescription import Prescription, PrescriptionPublic
 from pydantic import BaseModel
 from datetime import date
 
@@ -37,10 +37,10 @@ def patient_info(
 
 
 @router.get("/patients/{mbo}/treatments")
-def patient_perscriptions(
+def patient_prescriptions(
     mbo: str,
     user_repo: UserRepository = Depends(get_user_repo),
-    perscription_repo: PerscriptionRepository = Depends(get_perscription_repo),
+    prescription_repo: PrescriptionRepository = Depends(get_prescription_repo),
     user: UserInternal = Depends(get_current_user),
 ):
     if user.role != "provider":
@@ -50,29 +50,29 @@ def patient_perscriptions(
     patient_db = user_repo.get_by_mbo(mbo)
     if not patient_db:
         raise HTTPException(status_code=400, detail="Patient not found")
-    persctiptions_db = perscription_repo.get_by_userid(patient_db.userid)
+    presctiptions_db = prescription_repo.get_by_userid(patient_db.userid)
     return [
-        PerscriptionPublic(
+        PrescriptionPublic(
             drugName=p.drugname,
             times=p.times,
             pickupDay=p.pickup_day,
         )
-        for p in persctiptions_db
+        for p in presctiptions_db
     ]
 
 
-class PerscriptionBody(BaseModel):
+class PrescriptionBody(BaseModel):
     patientMbo: str
     drugName: str
     times: list[str]
     pickupDay: date
 
 
-@router.post("/perscription")
-def add_perscription(
-    body: PerscriptionBody,
+@router.post("/prescription")
+def add_prescription(
+    body: PrescriptionBody,
     user_repo: UserRepository = Depends(get_user_repo),
-    perscription_repo: PerscriptionRepository = Depends(get_perscription_repo),
+    prescription_repo: PrescriptionRepository = Depends(get_prescription_repo),
     user: UserInternal = Depends(get_current_user),
 ):
     if user.role != "provider":
@@ -82,10 +82,10 @@ def add_perscription(
     patient_db = user_repo.get_by_mbo(body.patientMbo)
     if not patient_db:
         raise HTTPException(status_code=400, detail="Patient not found")
-    perscription = Perscription(
+    prescription = Prescription(
         userid=patient_db.userid,
         drugname=body.drugName,
         times=body.times,
         pickup_day=body.pickupDay,
     )
-    perscription_repo.add_perscription(perscription)
+    prescription_repo.add_prescription(prescription)

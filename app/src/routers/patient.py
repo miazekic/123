@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.src.services.auth import get_current_user
-from app.src.repositories.perscriptions import (
-    PerscriptionRepository,
-    get_perscription_repo,
+from app.src.repositories.prescriptions import (
+    PrescriptionRepository,
+    get_prescription_repo,
 )
 from app.src.models.user import UserInternal
-from app.src.models.perscription import PerscriptionPublic
+from app.src.models.prescription import PrescriptionPublic
 
 router = APIRouter()
 
@@ -13,7 +13,7 @@ router = APIRouter()
 @router.get("/treatments")
 def patient_treatments(
     user: UserInternal = Depends(get_current_user),
-    repo: PerscriptionRepository = Depends(get_perscription_repo),
+    repo: PrescriptionRepository = Depends(get_prescription_repo),
 ):
     if user.role != "patient":
         raise HTTPException(
@@ -22,7 +22,7 @@ def patient_treatments(
         )
     treatments = repo.get_by_userid(user.userid)
     return [
-        PerscriptionPublic(
+        PrescriptionPublic(
             drugName=p.drugname,
             times=p.times,
             pickupDay=p.pickup_day,
