@@ -10,18 +10,18 @@ class PerscriptionInDB(SQLModel, table=True):
     perscriptionid: int = Field(primary_key=True)
     userid: int
     drugname: str
-    consume_times: list[str] = Field(sa_column=Column(JSON))
-    pickup_again: date
+    times: list[str] = Field(sa_column=Column(JSON))
+    pickup_day: date
 
 
 class Perscription(BaseModel):
     userid: int
     drugname: str
-    consume_times: list[str]
-    pickup_again: date
+    times: list[str]
+    pickup_day: date
 
 
 class PerscriptionPublic(BaseModel):
     drugname: str
-    consume_times: list[str]
-    pickup_again: date
+    times: list[str]
+    pickup_day: date

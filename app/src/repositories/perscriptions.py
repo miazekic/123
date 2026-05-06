@@ -16,8 +16,8 @@ class PerscriptionRepository:
         obj = PerscriptionInDB(
             userid=obj.userid,
             drugname=obj.drugname,
-            consume_times=obj.consume_times,
-            pickup_again=obj.pickup_again,
+            times=obj.times,
+            pickup_day=obj.pickup_day,
         )
         self.db_session.add(obj)
         self.db_session.commit()

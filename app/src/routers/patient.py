@@ -24,8 +24,8 @@ def patient_treatments(
     return [
         PerscriptionPublic(
             drugname=p.drugname,
-            consume_times=p.consume_times,
-            pickup_again=p.pickup_again,
+            times=p.times,
+            pickup_day=p.pickup_day,
         )
         for p in treatments
     ]

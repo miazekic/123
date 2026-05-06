@@ -49,7 +49,7 @@ CREATE TABLE perscriptions (
     perscriptionid INTEGER NOT NULL AUTO_INCREMENT,
     userid INTEGER NOT NULL,
     drugname VARCHAR(200) NOT NULL,
-    consume_times JSON,
-    pickup_again DATE,
+    times JSON,
+    pickup_day DATE,
     PRIMARY KEY (perscriptionid)
 );

@@ -54,8 +54,8 @@ def patient_perscriptions(
     return [
         PerscriptionPublic(
             drugname=p.drugname,
-            consume_times=p.consume_times,
-            pickup_again=p.pickup_again,
+            times=p.times,
+            pickup_day=p.pickup_day,
         )
         for p in persctiptions_db
     ]
@@ -64,8 +64,8 @@ def patient_perscriptions(
 class PerscriptionBody(BaseModel):
     patientMbo: str
     drugName: str
-    consumeTimes: list[str]
-    pickupAgain: date
+    times: list[str]
+    pickupDay: date
 
 
 @router.post("/perscription")
@@ -85,7 +85,7 @@ def add_perscription(
     perscription = Perscription(
         userid=patient_db.userid,
         drugname=body.drugName,
-        consume_times=body.consumeTimes,
-        pickup_again=body.pickupAgain,
+        times=body.times,
+        pickup_day=body.pickupDay,
     )
     perscription_repo.add_perscription(perscription)
